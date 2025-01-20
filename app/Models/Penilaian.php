@@ -48,7 +48,7 @@ class Penilaian extends Model
 
         // Hitung nilai a (min), b (max)
         $a = 1;
-        $b = $penilaian->max()+10;
+        $b = $penilaian->max()*2;
 
         $kriteria = $this->kriteria;
         $attribute = $kriteria->attribute;

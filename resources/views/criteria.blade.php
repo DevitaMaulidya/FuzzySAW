@@ -95,7 +95,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="weight" class="form-label">Bobot</label>
-                        <input type="text" class="form-control" id="weight" name="weight" required>
+                        <input type="text" class="form-control bobot-input" id="weight" name="weight" required>
                     </div>
                     <div class="mb-3">
                         <label for="atrribute" class="form-label">Atribut</label>
@@ -105,6 +105,7 @@
                             <option value="benefit">Benefit</option>
                         </select>
                     </div>
+                    <div id="bobotWarningTambah" class="text-danger" style="display: none;"></div>
                     <button type="submit" class="btn btn-primary">Tambah</button>
                 </form>
             </div>
@@ -157,4 +158,33 @@
     </div>
 </div>
 @endforeach
+
+<script>
+function validateTotalBobot(modalId) {
+    let totalBobot = 0;
+    let warningElement = document.getElementById(`bobotWarningTambah`);
+
+    // Mengambil semua input bobot hanya dalam modal yang sedang digunakan
+    document.querySelectorAll(`#${modalId} .bobot-input`).forEach(input => {
+        totalBobot += parseFloat(input.value) || 0;
+    });
+
+    if (totalBobot !== 1) {
+        warningElement.innerHTML = "⚠️ Total bobot harus sama dengan 1!";
+        warningElement.style.display = "block";
+        return false;
+    } else {
+        warningElement.innerHTML = "";
+        warningElement.style.display = "none";
+        return true;
+    }
+}
+
+// Tambahkan event listener pada modal Tambah Data
+document.querySelector("#tambahDataKriteria form").addEventListener("submit", function(event) {
+    if (!validateTotalBobot('tambahDataKriteria')) {
+        event.preventDefault();
+    }
+});
+</script>
 @endsection
